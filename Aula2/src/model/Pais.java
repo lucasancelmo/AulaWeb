@@ -2,24 +2,24 @@ package model;
 
 public class Pais {
 
-	private int id;
+	private long id;
 	private String nome;
 	private long populacao;
 	private double area;
 	
 	public Pais() {}
 	
-	public Pais(int id, String nome, long populacao, double area) {
+	public Pais(long id, String nome, long populacao, double area) {
 		setNome(nome);
 		setPopulacao(populacao);
 		setArea(area);
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

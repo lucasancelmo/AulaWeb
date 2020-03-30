@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Pais;
 
@@ -20,7 +21,7 @@ public class PaisDAO {
 		String inserir = "INSERT INTO Paises (id, nome, populacao, area_total)" + "VALUES(?,?,?,?)";
 	
 		try (PreparedStatement pst = conexao.prepareStatement(inserir)){
-			pst.setInt(1, pais.getId());
+			pst.setLong(1, pais.getId());
 			pst.setString(2, pais.getNome());
 			pst.setLong(3, pais.getPopulacao());
 			pst.setDouble(4, pais.getArea());
@@ -35,11 +36,11 @@ public class PaisDAO {
 	
 	//SELECT
 	public String selectPais (int id) {
-		
-		String consulta = "SELECT id, nome, populacao, area_total FROM pais WHERE id = ?";
+		// WHERE id = ?
+		String consulta = "SELECT id, nome, populacao, area_total FROM Paises";
 				
 		try (PreparedStatement pst = conexao.prepareStatement(consulta)){
-			pst.setInt(1, id);
+		//	pst.setInt(1, id);
 			ResultSet resultado = pst.executeQuery();
 			Pais pais = null;
 			
@@ -96,5 +97,60 @@ public class PaisDAO {
 			ex.printStackTrace();
 			System.out.println("Erro ao atualizar");
 		}
-	}	
+	}
+	public String maiorNumeroHabitante() {
+		String maiorNumero = "SELECT * FROM Paises WHERE populacao = (SELECT MAX(populacao) FROM Paises);";
+		
+		try (PreparedStatement pst = conexao.prepareStatement(maiorNumero)){
+			ResultSet resultado = pst.executeQuery();
+			
+			if(resultado.next()) {
+				String nome = resultado.getString("nome");
+				return nome;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	public String menorNumeroHabitante() {
+		String maiorNumero = "SELECT * FROM Paises WHERE area_total = (SELECT MIN(area_total) FROM Paises);";
+		
+		try (PreparedStatement pst = conexao.prepareStatement(maiorNumero)){
+			ResultSet resultado = pst.executeQuery();
+			
+			if(resultado.next()) {
+				String nome = resultado.getString("nome");
+				return nome;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	public List<Pais> vetorTresPaises() {
+		String consulta = "SELECT * FROM Paises ORDER BY nome LIMIT 3;";
+		List<Pais> pais = new ArrayList<>(); 
+		try (PreparedStatement pst = conexao.prepareStatement(consulta)){
+			ResultSet resultado = pst.executeQuery();
+
+			while(resultado.next()) {
+				System.out.println(resultado.getLong("id"));
+				Pais ps = new Pais(			
+				resultado.getLong("id"),
+				resultado.getString("nome"),
+				resultado.getLong("populacao"),
+				resultado.getDouble("area_total"));
+				
+				pais.add(ps);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return pais;
+	}
 }
