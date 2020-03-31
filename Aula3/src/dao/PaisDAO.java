@@ -10,9 +10,6 @@ import model.Pais;
 public class PaisDAO {
 
 	Connection conexao = ConnectionFactory.conectar();	
-	/*public PaisDAO (Connection conexao) {
-		this.conexao = conexao;
-	}*/
 	
 	public long insert (Pais pais) {
 		String inserir = "INSERT INTO Paises (id, nome, area_total, populacao)" + "VALUES(?,?,?,?)";
@@ -51,7 +48,7 @@ public class PaisDAO {
 				long populacao = resultado.getLong("populacao");
 				double area = resultado.getDouble("area_total");
 				
-				//Atribuição
+				//AtribuiÃ§Ã£o
 				pais.setId(idPais);
 				pais.setNome(nome);
 				pais.setPopulacao(populacao);
