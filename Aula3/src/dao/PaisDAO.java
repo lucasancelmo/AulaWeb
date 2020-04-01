@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import model.Pais;
 public class PaisDAO {
 
+<<<<<<< HEAD
 	Connection conexao = ConnectionFactory.conectar();
+=======
+	Connection conexao = ConnectionFactory.conectar();	
+>>>>>>> branch 'master' of https://github.com/lucasancelmo/AulaWeb
 	
 	public int insert (Pais pais) {
 		String inserir = "INSERT INTO Paises (nome, area_total, populacao)" + "VALUES(?,?,?)";
@@ -50,11 +54,28 @@ public class PaisDAO {
 			ResultSet resultado = pst.executeQuery();
 					
 			if(resultado.next()) {
+<<<<<<< HEAD
 				//Atribuição
 				pais.setId(resultado.getInt("id"));
 				pais.setNome(resultado.getString("nome"));
 				pais.setPopulacao(resultado.getLong("populacao"));
 				pais.setArea(resultado.getDouble("area_total"));
+=======
+				pais = new Pais();
+				
+				int idPais = resultado.getInt("id");
+				String nome = resultado.getString("nome");
+				long populacao = resultado.getLong("populacao");
+				double area = resultado.getDouble("area_total");
+				
+				//AtribuiÃ§Ã£o
+				pais.setId(idPais);
+				pais.setNome(nome);
+				pais.setPopulacao(populacao);
+				pais.setArea(area);
+				
+				return pais;
+>>>>>>> branch 'master' of https://github.com/lucasancelmo/AulaWeb
 			}
 			System.out.println("Consulta feita com sucesso");
 		} catch(SQLException ex) {	
