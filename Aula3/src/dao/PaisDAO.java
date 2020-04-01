@@ -10,6 +10,7 @@ public class PaisDAO {
 
 	Connection conexao = ConnectionFactory.conectar();
 	
+
 	public int insert (Pais pais) {
 		String inserir = "INSERT INTO Paises (nome, area_total, populacao)" + "VALUES(?,?,?)";
 	
