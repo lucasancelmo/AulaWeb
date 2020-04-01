@@ -30,7 +30,7 @@ public class PaisDAO {
 				}
 				
 			}catch(SQLException e) {
-				System.out.println("Id n�o encontrado");
+				System.out.println("Id não encontrado");
 				e.printStackTrace();
 			}
 			
@@ -52,7 +52,7 @@ public class PaisDAO {
 			ResultSet resultado = pst.executeQuery();
 					
 			if(resultado.next()) {
-				//Atribuição
+				//AtribuiÃ§Ã£o
 				pais.setId(resultado.getInt("id"));
 				pais.setNome(resultado.getString("nome"));
 				pais.setPopulacao(resultado.getLong("populacao"));
@@ -123,8 +123,7 @@ public class PaisDAO {
 				return nome;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			
+			e.printStackTrace();	
 		}
 		return null;
 	}
