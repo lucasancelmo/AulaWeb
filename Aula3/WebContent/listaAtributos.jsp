@@ -20,7 +20,6 @@ Session: <%=ses %><br>
 <%String app = (String)application.getAttribute("sApp"); %>
 Application: <%=app %><br>
 
-
 <br>
 <a href="principal.html">Voltar para a página Principal</a>
 
