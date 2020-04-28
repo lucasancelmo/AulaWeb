@@ -1,8 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,16 +46,13 @@ public class ManterPaisController extends HttpServlet {
 		PaisService cs = new PaisService();
 		cs.criar(pais);
 		pais = cs.carregar(pais.getId());
-		PrintWriter out = response.getWriter();
-		System.out.println(pais.getId());
 		
-		out.println("<html><head><title>Pais Cadastrado</title></head><body>");
-		out.println(	"Id: "+pais.getId()+"<br>");
-		out.println(	"nome do Pais: "+pais.getNome()+"<br>");
-		out.println(	"Área: "+pais.getArea()+"<br>");
-		out.println(	"População: "+pais.getPopulacao()+"<br>");
-		out.println("<a href=index.html>Inicio</a>");
-	    out.println("</body></html>");
+		request.setAttribute("pais", pais);
+		
+		RequestDispatcher view = request.getRequestDispatcher("Pais.jsp");
+		view.forward(request, response);
+		
+		
 		
 	}
 
