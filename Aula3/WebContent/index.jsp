@@ -43,7 +43,7 @@
             <div id="actions" class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary" name="acao" value="Criar">Salvar</button>
-                    <a href="index.jsp" class="btn btn-default">Cancelar</a>
+                    <a href="ListarPais.jsp" class="btn btn-default">Cancelar</a>
                 </div>
             </div>
         </form>

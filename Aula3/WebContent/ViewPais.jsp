@@ -34,7 +34,7 @@
 		</div>
 		<hr>
 		<div id="actions" class="row">
-			<a href="index.jsp" class="btn btn-default">Voltar</a>
+			<a href="ListarPais.jsp" class="btn btn-default">Voltar</a>
 		</div>
 	</div>
 	<script src="js/jquery.min.js"></script>

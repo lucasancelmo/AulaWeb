@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Pais;
 public class PaisDAO {
@@ -82,12 +83,14 @@ public class PaisDAO {
 		}
 	}
 	
-	public void upDateNomePais (String pais, int id) {		
-		String update = "UPDATE Paises SET nome = ? WHERE id = ?";
+	public void updatePais (Pais pais) {		
+		String update = "UPDATE Paises SET nome = ?, area_total= ?, populacao = ? WHERE id = ?";
 			
 		try (PreparedStatement pst = conexao.prepareStatement(update)){
-			pst.setString(1, pais);
-			pst.setInt(2, id);
+			pst.setString(1, pais.getNome());
+			pst.setDouble(2, pais.getArea());
+			pst.setLong(3, pais.getPopulacao());
+			pst.setInt(4, pais.getId());
 			pst.execute();
 				
 			System.out.println("Atualizado com sucesso!");
@@ -126,5 +129,57 @@ public class PaisDAO {
 			e.printStackTrace();	
 		}
 		return null;
+	}
+	
+	public ArrayList<Pais> listarPaises(){
+		Pais pais;
+		ArrayList<Pais> lista = new ArrayList<>();
+		
+		String sqlSelect = "SELECT id, nome, populacao, area_total FROM paises";
+		try(PreparedStatement pst = conexao.prepareStatement(sqlSelect)) {
+			try(ResultSet rs = pst.executeQuery();) {
+				while(rs.next()) {
+					pais = new Pais();
+					pais.setId(rs.getInt("id"));
+					pais.setNome(rs.getString("nome"));
+					pais.setPopulacao(rs.getLong("populacao"));
+					pais.setArea(rs.getDouble("area_total"));
+					lista.add(pais);
+				}
+				
+			} catch (SQLException el) {
+				el.printStackTrace();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public ArrayList<Pais> listarPaises(String chave){
+		Pais pais;
+		ArrayList<Pais>lista = new ArrayList<>();
+		String sqlSelect = "SELECT id, nome, populacao, area_total FROM paises where	upper(nome) like ?";
+		try(PreparedStatement pst = conexao.prepareStatement(sqlSelect)) {
+			pst.setString(1, "%" + chave.toUpperCase() + "%");
+			try(ResultSet rs = pst.executeQuery();) {
+				while(rs.next()) {
+					pais = new Pais();
+					pais.setId(rs.getInt("id"));
+					pais.setNome(rs.getString("nome"));
+					pais.setPopulacao(rs.getLong("populacao"));
+					pais.setArea(rs.getDouble("area_total"));
+					lista.add(pais);
+				}
+				
+			} catch (SQLException el) {
+				el.printStackTrace();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
 }
